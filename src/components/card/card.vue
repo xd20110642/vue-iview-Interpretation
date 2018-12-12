@@ -1,8 +1,9 @@
 <template>
     <div :class="classes">
         <div :class="headClasses" v-if="showHead">
-            <!-- 具名插槽 -->
+            <!-- 具名插槽 如果使用的时候没有传入内容  那么就会默认渲染 插槽里面的内容-->
             <slot name="title">
+                <!-- title 是父组件传递的 -->
             <p v-if="title">
                 <Icon v-if="icon" :type="icon"></Icon>
                 <span>{{title}}</span>
