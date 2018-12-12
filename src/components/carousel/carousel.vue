@@ -1,6 +1,7 @@
 <template>
     <div :class="classes">
         <button type="button" :class="arrowClasses" class="left" @click="arrowEvent(-1)">
+            <!-- 使用图标组件 -->
             <Icon type="ios-arrow-back"></Icon>
         </button>
         <div :class="[prefixCls + '-list']">
@@ -27,6 +28,7 @@
 <script>
     import Icon from '../icon/icon.vue';
     import { getStyle, oneOf } from '../../utils/assist';
+    // 引入监听事件 取消监听事件
     import { on, off } from '../../utils/dom';
 
     const prefixCls = 'ivu-carousel';
@@ -35,6 +37,7 @@
         name: 'Carousel',
         components: { Icon },
         props: {
+            // 选择触发箭头显示的方式
             arrow: {
                 type: String,
                 default: 'hover',
@@ -42,22 +45,27 @@
                     return oneOf(value, ['hover', 'always', 'never']);
                 }
             },
+            // 是否自动轮播
             autoplay: {
                 type: Boolean,
                 default: false
             },
+            // 轮播时间
             autoplaySpeed: {
                 type: Number,
                 default: 2000
             },
+            // 是否循环
             loop: {
                 type: Boolean,
                 default: false
             },
+            // 选择动画效果
             easing: {
                 type: String,
                 default: 'ease'
             },
+            // 选择指示器的位置
             dots: {
                 type: String,
                 default: 'inside',
@@ -65,10 +73,12 @@
                     return oneOf(value, ['inside', 'outside', 'none']);
                 }
             },
+            // 是否显示圆形指示器
             radiusDot: {
                 type: Boolean,
                 default: false
             },
+            // 现在指示器的触发方式
             trigger: {
                 type: String,
                 default: 'click',
@@ -76,10 +86,12 @@
                     return oneOf(value, ['click', 'hover']);
                 }
             },
+            // 幻灯片的索引值
             value: {
                 type: Number,
                 default: 0
             },
+            // 图片的高度
             height: {
                 type: [String, Number],
                 default: 'auto',
@@ -100,8 +112,8 @@
                 slideInstances: [],
                 timer: null,
                 ready: false,
-                currentIndex: this.value,
-                trackIndex: this.value,
+                currentIndex: this.value,//幻灯片的索引值
+                trackIndex: this.value,//
                 copyTrackIndex: this.value,
                 hideTrackPos: -1, // 默认左滑
             };

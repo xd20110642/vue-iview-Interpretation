@@ -10,8 +10,14 @@
             </p>
             </slot>
         </div>
-        <div :class="extraClasses" v-if="showExtra"><slot name="extra"></slot></div>
-        <div :class="bodyClasses" :style="bodyStyles"><slot></slot></div>
+        <div :class="extraClasses" v-if="showExtra">
+            <!-- 具名插槽  额外显示的内容-->
+            <slot name="extra"></slot>
+            </div>
+        <div :class="bodyClasses" :style="bodyStyles">
+            <!-- 普通插槽 显示没有匹配到的其他数据-->
+            <slot></slot>
+        </div>
     </div>
 </template>
 <script>
@@ -83,7 +89,9 @@
             }
         },
         mounted () {
+            // 判断是否显示头部  根据传入的title 和获取到插槽实例的值   this.$slots.title 获取到的是插槽的值
             this.showHead = this.title || this.$slots.title !== undefined;
+            // 同上
             this.showExtra = this.$slots.extra !== undefined;
         }
     };
