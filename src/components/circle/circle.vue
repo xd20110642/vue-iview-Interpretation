@@ -1,5 +1,6 @@
 <template>
     <div :style="circleSize" :class="wrapClasses">
+        <!-- 使用svg图片 -->
         <svg viewBox="0 0 100 100">
             <path :d="pathString" :stroke="trailColor" :stroke-width="trailWidth" :fill-opacity="0" :style="trailStyle" />
             <path :d="pathString" :stroke-linecap="strokeLinecap" :stroke="strokeColor" :stroke-width="computedStrokeWidth" fill-opacity="0" :style="pathStyle" />
@@ -17,36 +18,44 @@
     export default {
         name: 'iCircle',
         props: {
+            // percent 百分比
             percent: {
                 type: Number,
                 default: 0
             },
+            // 图表的宽度和高度
             size: {
                 type: Number,
                 default: 120
             },
+            // 进度环的线宽，单位 px	 
             strokeWidth: {
                 type: Number,
                 default: 6
             },
+            // 进度换的颜色
             strokeColor: {
                 type: String,
                 default: '#2d8cf0'
             },
+            // 进度环顶端的形状
             strokeLinecap: {
                 validator (value) {
                     return oneOf(value, ['square', 'round']);
                 },
                 default: 'round'
             },
+            // 进度环背景的线宽，单位 px
             trailWidth: {
                 type: Number,
                 default: 5
             },
+            // 进度环背景的颜色	
             trailColor: {
                 type: String,
                 default: '#eaeef2'
             },
+            // dashboard
             dashboard: {
                 type: Boolean,
                 default: false

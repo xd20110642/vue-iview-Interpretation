@@ -173,15 +173,16 @@ export function scrollTop(el, from = 0, to, duration = 500, endCallback) {
     scroll(from, to, step);
 }
 
-// Find components upward
+// Find components upward 向上查找组件 返回组件
 function findComponentUpward (context, componentName, componentNames) {
     if (typeof componentName === 'string') {
         componentNames = [componentName];
     } else {
         componentNames = componentName;
     }
-
+    // 获取到父组件的实例
     let parent = context.$parent;
+    // 读取到父组件的初始化实例的名字
     let name = parent.$options.name;
     while (parent && (!name || componentNames.indexOf(name) < 0)) {
         parent = parent.$parent;

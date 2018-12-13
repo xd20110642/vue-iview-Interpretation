@@ -1,7 +1,11 @@
 <template>
+    <!-- 这个地方是展示次级菜单的内容的 -->
     <li :class="classes">
+        <!-- 展示内容 -->
         {{ data.label }}
+        <!-- 展示图标 -->
         <i v-if="showArrow" class="ivu-icon ivu-icon-ios-arrow-forward"></i>
+        <!-- 显示loading 状态 -->
         <i v-if="showLoading" class="ivu-icon ivu-icon-ios-loading ivu-load-loop"></i>
     </li>
 </template>
@@ -24,6 +28,7 @@
                 ];
             },
             showArrow () {
+                // 
                 return (this.data.children && this.data.children.length) || ('loading' in this.data && !this.data.loading);
             },
             showLoading () {

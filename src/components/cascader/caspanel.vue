@@ -1,6 +1,7 @@
 <template>
     <span>
         <ul v-if="data && data.length" :class="[prefixCls + '-menu']">
+            <!-- 传入数组的值 -->
             <Casitem
                 v-for="item in data"
                 :key="getKey()"
@@ -9,7 +10,10 @@
                 :tmp-item="tmpItem"
                 @click.native.stop="handleClickItem(item)"
                 @mouseenter.native.stop="handleHoverItem(item)"></Casitem>
-        </ul><Caspanel v-if="sublist && sublist.length" :prefix-cls="prefixCls" :data="sublist" :disabled="disabled" :trigger="trigger" :change-on-select="changeOnSelect"></Caspanel>
+        </ul>
+        <!-- 组件的递归调用  自己调用自己 再次渲染上面的内容 也就是生成二级列表 -->
+        <Caspanel v-if="sublist && sublist.length" :prefix-cls="prefixCls" :data="sublist" :disabled="disabled" :trigger="trigger" :change-on-select="changeOnSelect">
+        </Caspanel>
     </span>
 </template>
 <script>

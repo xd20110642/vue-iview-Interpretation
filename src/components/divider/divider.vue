@@ -1,6 +1,7 @@
 <template>
     <div :class="classes">
         <span v-if="hasSlot" :class="slotClasses">
+            <!-- 插槽 -->
             <slot></slot>
         </span>
     </div>

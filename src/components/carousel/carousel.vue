@@ -1,24 +1,34 @@
 <template>
     <div :class="classes">
+        <!-- 显示左边的箭头图标 上一张-->
         <button type="button" :class="arrowClasses" class="left" @click="arrowEvent(-1)">
             <!-- 使用图标组件 -->
             <Icon type="ios-arrow-back"></Icon>
         </button>
+        <!-- 内容显示区域 -->
         <div :class="[prefixCls + '-list']">
+            <!-- 起始内容 -->
             <div :class="[prefixCls + '-track', showCopyTrack ? '' : 'higher']" :style="trackStyles" ref="originTrack">
+                <!-- 插槽 这个地方就是存放 carousel-item的地方-->
                 <slot></slot>
             </div>
+            <!-- 判断是否循环播放 这个是复制的内容-->
             <div :class="[prefixCls + '-track', showCopyTrack ? 'higher' : '']" :style="copyTrackStyles" ref="copyTrack" v-if="loop">
             </div>
         </div>
+        <!-- 右边的按钮 也就是下一张 -->
         <button type="button" :class="arrowClasses" class="right" @click="arrowEvent(1)">
             <Icon type="ios-arrow-forward"></Icon>
         </button>
+        <!-- 下面的小图标的位置 -->
         <ul :class="dotsClasses">
-            <template v-for="n in slides.length">
+            <!-- 个数为 幻灯片的长度 -->
+            <template v-for="(n,a) in slides.length" >
                 <li :class="[n - 1 === currentIndex ? prefixCls + '-active' : '']"
                     @click="dotsEvent('click', n - 1)"
-                    @mouseover="dotsEvent('hover', n - 1)">
+                    @mouseover="dotsEvent('hover', n - 1)"
+                    :key="a"
+                    >
                     <button type="button" :class="[radiusDot ? 'radius' : '']"></button>
                 </li>
             </template>
@@ -124,10 +134,13 @@
                     `${prefixCls}`
                 ];
             },
+            // 显示原本内容 
             trackStyles () {
                 return {
                     width: `${this.trackWidth}px`,
+                    // div移动 x轴移动
                     transform: `translate3d(${-this.trackOffset}px, 0px, 0px)`,
+                    // 添加过度动画
                     transition: `transform 500ms ${this.easing}`
                 };
             },
@@ -154,7 +167,7 @@
             }
         },
         methods: {
-            // find option component
+            // find option component  cd为回调函数
             findChild (cb) {
                 const find = function (child) {
                     const name = child.$options.componentName;
@@ -181,6 +194,7 @@
             // copy trackDom
             initCopyTrackDom () {
                 this.$nextTick(() => {
+                    // 复制原本的内容
                     this.$refs.copyTrack.innerHTML = this.$refs.originTrack.innerHTML;
                 });
             },
@@ -285,9 +299,12 @@
                     this.setAutoplay();
                 }
             },
+            // 设置自动播放
             setAutoplay () {
+                // 先清除全局定时器
                 window.clearInterval(this.timer);
                 if (this.autoplay) {
+                    // 新建定时器
                     this.timer = window.setInterval(() => {
                         this.add(1);
                     }, this.autoplaySpeed);

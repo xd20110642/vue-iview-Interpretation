@@ -1,5 +1,7 @@
 <template>
+    <!-- ul -->
     <div :class="classes">
+        <!-- 使用插槽 -->
         <slot></slot>
     </div>
 </template>
@@ -49,6 +51,7 @@
         },
         methods: {
             updateModel (update) {
+                // 向下查找子组件 Checkbox
                 this.childrens = findComponentsDownward(this, 'Checkbox');
                 if (this.childrens) {
                     const { value } = this;

@@ -1,8 +1,11 @@
 <template>
+    <!-- v-click-outside 自定义指令 -->
     <div :class="classes" v-click-outside="handleClose">
         <div :class="[prefixCls + '-rel']" @click="toggleOpen" ref="reference">
             <input type="hidden" :name="name" :value="currentValue">
+            <!-- 插槽 如果在组件中 没有传入内容 那么就默认显示 下面的内容 -->
             <slot>
+                <!-- 输入框 -->
                 <i-input
                     :element-id="elementId"
                     ref="input"
@@ -12,6 +15,7 @@
                     @on-change="handleInput"
                     :size="size"
                     :placeholder="inputPlaceholder"></i-input>
+                    <!--  -->
                 <div
                     :class="[prefixCls + '-label']"
                     v-show="filterable && query === ''"
@@ -20,6 +24,7 @@
                 <Icon type="ios-arrow-down" :class="[prefixCls + '-arrow']"></Icon>
             </slot>
         </div>
+        <!-- 添加过度动画 -->
         <transition name="transition-drop">
             <Drop
                 v-show="visible"
@@ -29,6 +34,7 @@
                 :transfer="transfer"
                 v-transfer-dom>
                 <div>
+                    <!-- 使用组件 -->
                     <Caspanel
                         v-show="!filterable || (filterable && query === '')"
                         ref="caspanel"
@@ -44,6 +50,7 @@
                                     [selectPrefixCls + '-item-disabled']: item.disabled
                                 }]"
                                 v-for="(item, index) in querySelections"
+                                :key="index"
                                 @click="handleSelectItem(index)" v-html="item.display"></li>
                         </ul>
                     </div>
@@ -73,29 +80,35 @@
         components: { iInput, Drop, Icon, Caspanel },
         directives: { clickOutside, TransferDom },
         props: {
+            // 需要渲染的数据
             data: {
                 type: Array,
                 default () {
                     return [];
                 }
             },
+            // 当前已选的数据
             value: {
                 type: Array,
                 default () {
                     return [];
                 }
             },
+            // 是否允许点击
             disabled: {
                 type: Boolean,
                 default: false
             },
+            // 是否支持清除
             clearable: {
                 type: Boolean,
                 default: true
             },
+            // 输入框占位符
             placeholder: {
                 type: String
             },
+            // 输入框的大小
             size: {
                 validator (value) {
                     return oneOf(value, ['small', 'large', 'default']);
@@ -104,41 +117,50 @@
                     return !this.$IVIEW || this.$IVIEW.size === '' ? 'default' : this.$IVIEW.size;
                 }
             },
+            // 次级菜单的展开方式
             trigger: {
                 validator (value) {
                     return oneOf(value, ['click', 'hover']);
                 },
                 default: 'click'
             },
+            // 当此项为 true 时，点选每级菜单选项值都会发生变化，具体见上面的示例
             changeOnSelect: {
                 type: Boolean,
                 default: false
             },
+            // 选择后展示的函数，用于自定义显示格式
             renderFormat: {
                 type: Function,
                 default (label) {
                     return label.join(' / ');
                 }
             },
+            // 动态获取数据
             loadData: {
                 type: Function
             },
+            // 是否支持搜索
             filterable: {
                 type: Boolean,
                 default: false
             },
+            // 输入框为空的时候 显示的内容
             notFoundText: {
                 type: String
             },
+            // 是否将弹层放置于 body 内，在 Tabs、带有 fixed 的 Table 列内使用时，建议添加此属性，它将不受父级样式影响，从而达到更好的效果
             transfer: {
                 type: Boolean,
                 default () {
                     return !this.$IVIEW || this.$IVIEW.transfer === '' ? false : this.$IVIEW.transfer;
                 }
             },
+            // 
             name: {
                 type: String
             },
+            // 给元素单独设置
             elementId: {
                 type: String
             }
@@ -158,6 +180,7 @@
             };
         },
         computed: {
+            // 计算样式
             classes () {
                 return [
                     `${prefixCls}`,
@@ -170,9 +193,11 @@
                     }
                 ];
             },
+            // 展示关闭图标
             showCloseIcon () {
                 return this.currentValue && this.currentValue.length && this.clearable && !this.disabled;
             },
+            // 展示渲染函数
             displayRender () {
                 let label = [];
                 for (let i = 0; i < this.selected.length; i++) {
@@ -181,6 +206,7 @@
 
                 return this.renderFormat(label, this.selected);
             },
+            // 是否允许收缩
             displayInputRender () {
                 return this.filterable ? '' : this.displayRender;
             },
@@ -255,6 +281,7 @@
                     this.onFocus();
                 }
             },
+            // 失去焦点
             onFocus () {
                 this.visible = true;
                 if (!this.currentValue.length) {

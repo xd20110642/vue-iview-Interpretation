@@ -1,4 +1,5 @@
 <template>
+    <!-- 插槽 类似ul -->
     <div :class="classes">
         <slot></slot>
     </div>
@@ -9,13 +10,16 @@
     export default {
         name: 'Collapse',
         props: {
+            // 是否开启手风琴模式，开启后每次至多展开一个面板
             accordion: {
                 type: Boolean,
                 default: false
             },
+            // 当前激活的面板的 name，可以使用 v-model 双向绑定  也就是默认展示的
             value: {
                 type: [Array, String]
             },
+            // 是否开启简洁模式	
             simple: {
                 type: Boolean,
                 default: false
@@ -42,7 +46,7 @@
         methods: {
             setActive () {
                 const activeKey = this.getActiveKey();
-
+                // 遍历子组件
                 this.$children.forEach((child, index) => {
                     const name = child.name || index.toString();
 
@@ -51,9 +55,11 @@
                 });
             },
             getActiveKey () {
+                // 获取到当前的值
                 let activeKey = this.currentValue || [];
+                // 是否设置手风琴模式
                 const accordion = this.accordion;
-
+                // 判断 activeKey是否是 数组  取反  如果不是数组 就转换为数组
                 if (!Array.isArray(activeKey)) {
                     activeKey = [activeKey];
                 }
