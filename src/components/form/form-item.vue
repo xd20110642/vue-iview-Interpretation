@@ -1,8 +1,16 @@
 <template>
+    <!-- 如果要使用input等标签 就必须包裹在里面 一个item 中科院放多个标签  就是相当于是li -->
     <div :class="classes">
-        <label :class="[prefixCls + '-label']" :for="labelFor" :style="labelStyles" v-if="label || $slots.label"><slot name="label">{{ label }}</slot></label>
+        <!-- 就是点击文字 可自动聚焦在表单组件中 -->
+        <label :class="[prefixCls + '-label']" :for="labelFor" :style="labelStyles" v-if="label || $slots.label">
+            <!-- 使用具名插槽 -->
+            <slot name="label">{{ label }}</slot>
+        </label>
+        <!-- 这里写入表单控件 -->
         <div :class="[prefixCls + '-content']" :style="contentStyles">
+            <!-- 使用插槽 -->
             <slot></slot>
+            <!-- 添加过度属性 -->
             <transition name="fade">
                 <div :class="[prefixCls + '-error-tip']" v-if="validateState === 'error' && showMessage && form.showMessage">{{ validateMessage }}</div>
             </transition>
@@ -42,33 +50,42 @@
         name: 'FormItem',
         mixins: [ Emitter ],
         props: {
+            // 标签文本 也就是显示的文字
             label: {
                 type: String,
                 default: ''
             },
+            // 表单域标签的的宽度	
             labelWidth: {
                 type: Number
             },
+            // 对应表单域 model 里的字段	就是开启校验规则额时候 指向数据表单里面的prop
             prop: {
                 type: String
             },
+            // 是否是必填
             required: {
                 type: Boolean,
                 default: false
             },
+            // 表单验证规则
             rules: {
                 type: [Object, Array]
             },
+            // 错误信息
             error: {
                 type: String
             },
+            // 
             validateStatus: {
                 type: Boolean
             },
+            // 展示信息
             showMessage: {
                 type: Boolean,
                 default: true
             },
+            // 指定原生的 label 标签的 for 属性
             labelFor: {
                 type: String
             }
@@ -76,15 +93,17 @@
         data () {
             return {
                 prefixCls: prefixCls,
-                isRequired: false,
-                validateState: '',
-                validateMessage: '',
-                validateDisabled: false,
+                isRequired: false,//是否必填
+                validateState: '',//验证状态
+                validateMessage: '',//验证信息
+                validateDisabled: false,//验证是否允许点击
                 validator: {}
             };
         },
         watch: {
+            // 
             error (val) {
+                // 错误信息等于val
                 this.validateMessage = val;
                 this.validateState = val === '' ? '' : 'error';
             },

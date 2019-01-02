@@ -1,5 +1,9 @@
 <template>
-    <form :class="classes" :autocomplete="autocomplete"><slot></slot></form>
+    <!-- 使用form 标签 -->
+    <form :class="classes" :autocomplete="autocomplete">
+        <!-- 使用插槽 -->
+        <slot></slot>
+    </form>
 </template>
 <script>
     import { oneOf } from '../../utils/assist';

@@ -1,7 +1,11 @@
 <template>
+    <!-- 相当于ul  -->
     <li :class="[prefixCls + '-item-group']">
         <div :class="[prefixCls + '-item-group-title']" :style="groupStyle">{{ title }}</div>
-        <ul><slot></slot></ul>
+        <ul>
+            <!-- 插槽 -->
+            <slot></slot>
+        </ul>
     </li>
 </template>
 <script>

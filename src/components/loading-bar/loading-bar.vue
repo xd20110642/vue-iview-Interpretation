@@ -1,4 +1,5 @@
 <template>
+    <!-- 添加动画 -->
     <transition name="fade">
         <div :class="classes" :style="outerStyles" v-show="show">
             <div :class="innerClasses" :style="styles"></div>
@@ -16,14 +17,17 @@
 //                type: Number,
 //                default: 0
 //            },
+            // 配置颜色
             color: {
                 type: String,
                 default: 'primary'
             },
+            // 失败的颜色
             failedColor: {
                 type: String,
                 default: 'error'
             },
+            // 高度
             height: {
                 type: Number,
                 default: 2

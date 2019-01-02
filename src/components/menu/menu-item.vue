@@ -1,4 +1,6 @@
 <template>
+    <!-- 导航的最小单位  相当于li -->
+    <!-- 这个相当于是 渲染成a链接 -->
     <a
         v-if="to"
         :href="linkUrl"
@@ -7,8 +9,15 @@
         @click.exact="handleClickItem($event, false)"
         @click.ctrl="handleClickItem($event, true)"
         @click.meta="handleClickItem($event, true)"
-        :style="itemStyle"><slot></slot></a>
-    <li v-else :class="classes" @click.stop="handleClickItem" :style="itemStyle"><slot></slot></li>
+        :style="itemStyle">
+        <!-- 使用插槽 -->
+        <slot></slot>
+    </a>
+    <!-- 渲染成li 点击阻止默认事件-->
+    <li v-else :class="classes" @click.stop="handleClickItem" :style="itemStyle">
+        <!-- 使用插槽 -->
+        <slot></slot>
+    </li>
 </template>
 <script>
     import Emitter from '../../mixins/emitter';
@@ -20,6 +29,7 @@
 
     export default {
         name: 'MenuItem',
+        // 混合
         mixins: [ Emitter, mixin, mixinsLink ],
         props: {
             name: {
@@ -60,6 +70,7 @@
                 if (new_window || this.target === '_blank') {
                     // 如果是 new_window，直接新开窗口就行，无需发送状态
                     this.handleCheckClick(event, new_window);
+                    // 向上寻找 menu父组件
                     let parentMenu = findComponentUpward(this, 'Menu');
                     if (parentMenu) parentMenu.handleEmitSelectEvent(this.name);
                 } else {

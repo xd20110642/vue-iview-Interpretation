@@ -1,4 +1,5 @@
 <template>
+    <!-- 插槽 -->
     <div :class="classes" :style="styles">
         <slot></slot>
     </div>

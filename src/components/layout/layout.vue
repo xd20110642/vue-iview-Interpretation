@@ -1,5 +1,8 @@
 <template>
-     <div :class="wrapClasses"><slot></slot></div>
+     <div :class="wrapClasses">
+         <!-- 使用插槽 -->
+         <slot></slot>
+    </div>
 </template>
 <script>
     const prefixCls = 'ivu-layout';

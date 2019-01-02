@@ -1,4 +1,5 @@
 <template>
+    <!-- 插槽 -->
     <div :class="wrapClasses"><slot></slot></div>
 </template>
 <script>

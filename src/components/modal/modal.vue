@@ -1,4 +1,5 @@
 <template>
+    <!-- 对话框 -->
     <div v-transfer-dom :data-transfer="transfer">
         <transition :name="transitionNames[1]">
             <div :class="maskClasses" :style="wrapStyles" v-show="visible" v-if="showMask" @click="handleMask"></div>

@@ -1,5 +1,7 @@
 <template>
+    <!-- 栅格系统 -->
     <div :class="classes" :style="styles">
+        <!-- 使用插槽 -->
         <slot></slot>
     </div>
 </template>
@@ -11,25 +13,30 @@
     export default {
         name: 'Row',
         props: {
+            // 定义是什么排布
             type: {
                 validator (value) {
                     return oneOf(value, ['flex']);
                 }
             },
+            // flex 布局下的垂直对齐方式
             align: {
                 validator (value) {
                     return oneOf(value, ['top', 'middle', 'bottom']);
                 }
             },
+            //对齐方式
             justify: {
                 validator (value) {
                     return oneOf(value, ['start', 'end', 'center', 'space-around', 'space-between']);
                 }
             },
+            // 栅格间距
             gutter: {
                 type: Number,
                 default: 0
             },
+            // 自定义属性
             className: String
         },
         computed: {

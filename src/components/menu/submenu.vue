@@ -1,18 +1,26 @@
 <template>
+    <!-- 展示嵌套菜单栏的 子菜单  -->
     <li :class="classes" @mouseenter="handleMouseenter" @mouseleave="handleMouseleave">
         <div :class="[prefixCls + '-submenu-title']" ref="reference" @click.stop="handleClick" :style="titleStyle">
+            <!-- 具名插槽 -->
             <slot name="title"></slot>
+            <!-- 是否展示图标 -->
             <Icon type="ios-arrow-down" :class="[prefixCls + '-submenu-title-icon']"></Icon>
         </div>
         <collapse-transition v-if="mode === 'vertical'">
             <ul :class="[prefixCls]" v-show="opened"><slot></slot></ul>
         </collapse-transition>
         <transition name="slide-up" v-else>
+            <!-- 使用组件 -->
             <Drop
                 v-show="opened"
                 placement="bottom"
                 ref="drop"
-                :style="dropStyle"><ul :class="[prefixCls + '-drop-list']"><slot></slot></ul>
+                :style="dropStyle">
+                <ul :class="[prefixCls + '-drop-list']">
+                    <!-- 内容插槽 -->
+                    <slot></slot>
+                </ul>
             </Drop>
         </transition>
     </li>
