@@ -1,4 +1,5 @@
 <template>
+    <!-- 分页器 -->
     <div v-if="showSizer || showElevator" :class="optsClasses">
         <div v-if="showSizer" :class="sizerClasses">
             <i-select v-model="currentPageSize" :size="size" :placement="placement" :transfer="transfer" @on-change="changeSize">

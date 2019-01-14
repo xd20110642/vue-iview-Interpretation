@@ -1,6 +1,7 @@
 <template>
-    <!-- 对话框 -->
+    <!-- 对话框 使用自定义指令 并且添加自定义属性-->
     <div v-transfer-dom :data-transfer="transfer">
+        <!-- 添加动画 -->
         <transition :name="transitionNames[1]">
             <div :class="maskClasses" :style="wrapStyles" v-show="visible" v-if="showMask" @click="handleMask"></div>
         </transition>
@@ -9,16 +10,31 @@
                 <div :class="classes" :style="mainStyles" v-show="visible">
                     <div :class="contentClasses" ref="content" :style="contentStyles" @click="handleClickModal">
                         <a :class="[prefixCls + '-close']" v-if="closable" @click="close">
+                            <!-- 具名插槽  关闭插槽 如果没有插槽 那么就使用默认的内容-->
                             <slot name="close">
                                 <Icon type="ios-close"></Icon>
                             </slot>
                         </a>
+                        <!-- 写标题 -->
                         <div :class="[prefixCls + '-header']"
                              @mousedown="handleMoveStart"
                              v-if="showHead"
-                        ><slot name="header"><div :class="[prefixCls + '-header-inner']">{{ title }}</div></slot></div>
-                        <div :class="[prefixCls + '-body']"><slot></slot></div>
+                        >
+                        <!-- 具名插槽   -->
+                        <slot name="header">
+                            <div :class="[prefixCls + '-header-inner']">{{ title }}
+
+                            </div>
+                        </slot>
+                        </div>
+                        <!-- 写内容 -->
+                        <div :class="[prefixCls + '-body']">
+                            <!-- 普通插槽 只要在组件内写了东西 都会匹配到这里-->
+                            <slot></slot>
+                        </div>
+                        <!-- 写尾部 -->
                         <div :class="[prefixCls + '-footer']" v-if="!footerHide">
+                            <!-- 具名插槽 -->
                             <slot name="footer">
                                 <i-button type="text" size="large" @click.native="cancel">{{ localeCancelText }}</i-button>
                                 <i-button type="primary" size="large" :loading="buttonLoading" @click.native="ok">{{ localeOkText }}</i-button>
@@ -51,10 +67,12 @@
         components: { Icon, iButton },
         directives: { TransferDom },
         props: {
+            // 是否显示
             value: {
                 type: Boolean,
                 default: false
             },
+            // closable
             closable: {
                 type: Boolean,
                 default: true
@@ -63,6 +81,7 @@
                 type: Boolean,
                 default: true
             },
+            // 标题
             title: {
                 type: String
             },
@@ -246,9 +265,11 @@
                 const className = event.target.getAttribute('class');
                 if (className && className.indexOf(`${prefixCls}-wrap`) > -1) this.handleMask();
             },
+            // 取消回调
             cancel () {
                 this.close();
             },
+            // 确定回调
             ok () {
                 if (this.loading) {
                     this.buttonLoading = true;
@@ -258,6 +279,7 @@
                 }
                 this.$emit('on-ok');
             },
+            // 取消回调
             EscClose (e) {
                 if (this.visible && this.closable) {
                     if (e.keyCode === 27) {

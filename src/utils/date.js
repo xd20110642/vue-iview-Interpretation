@@ -1,5 +1,6 @@
 /*eslint-disable*/
 // 把 YYYY-MM-DD 改成了 yyyy-MM-dd
+// 时间格式化
 (function (main) {
     'use strict';
 
@@ -13,17 +14,19 @@
     var threeDigits = /\d{3}/;
     var fourDigits = /\d{4}/;
     var word = /[0-9]*['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+|[\u0600-\u06FF\/]+(\s*?[\u0600-\u06FF]+){1,2}/i;
+
     var noop = function () {
     };
-
+    // 缩短
     function shorten(arr, sLen) {
         var newArr = [];
         for (var i = 0, len = arr.length; i < len; i++) {
+            // 向newArr添加
             newArr.push(arr[i].substr(0, sLen));
         }
         return newArr;
     }
-
+    // 月更新
     function monthUpdate(arrName) {
         return function (d, v, i18n) {
             var index = i18n[arrName].indexOf(v.charAt(0).toUpperCase() + v.substr(1).toLowerCase());

@@ -1,4 +1,5 @@
 <template>
+    <!-- 无限滚动 -->
     <div :class="wrapClasses" style="touch-action: none;">
         <div
             :class="scrollContainerClasses"

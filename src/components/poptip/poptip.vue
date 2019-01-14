@@ -1,4 +1,5 @@
 <template>
+    <!-- 气泡弹框 -->
     <div
         :class="classes"
         @mouseenter="handleMouseenter"
@@ -10,6 +11,8 @@
             @click="handleClick"
             @mousedown="handleFocus(false)"
             @mouseup="handleBlur(false)">
+            <!-- 默认显示的插槽内容 -->
+            <!-- 插槽 -->
             <slot></slot>
         </div>
         <transition name="fade">
@@ -28,7 +31,10 @@
                     <div :class="[prefixCls + '-inner']" v-if="confirm">
                         <div :class="[prefixCls + '-body']">
                             <i class="ivu-icon ivu-icon-ios-help-circle"></i>
-                            <div :class="[prefixCls + '-body-message']"><slot name="title">{{ title }}</slot></div>
+                            <div :class="[prefixCls + '-body-message']">
+                                <!-- 标题插槽 -->
+                                <slot name="title">{{ title }}</slot>
+                            </div>
                         </div>
                         <div :class="[prefixCls + '-footer']">
                             <i-button type="text" size="small" @click.native="cancel">{{ localeCancelText }}</i-button>
@@ -38,7 +44,12 @@
                     <div :class="[prefixCls + '-inner']" v-if="!confirm">
                         <div :class="[prefixCls + '-title']" :style="contentPaddingStyle" v-if="showTitle" ref="title"><slot name="title"><div :class="[prefixCls + '-title-inner']">{{ title }}</div></slot></div>
                         <div :class="[prefixCls + '-body']" :style="contentPaddingStyle">
-                            <div :class="contentClasses"><slot name="content"><div :class="[prefixCls + '-body-content-inner']">{{ content }}</div></slot></div>
+                            <div :class="contentClasses">
+                                <!-- 内容插槽 -->
+                                <slot name="content">
+                                    <div :class="[prefixCls + '-body-content-inner']">{{ content }}</div>
+                                </slot>
+                            </div>
                         </div>
                     </div>
                 </div>

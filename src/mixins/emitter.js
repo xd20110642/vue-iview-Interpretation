@@ -1,3 +1,13 @@
+
+/**
+发射器
+ */
+/**
+ * 广播函数
+ * @param {*} componentName 组件name
+ * @param {*} eventName  事件名称
+ * @param {*} params  数据
+ */
 function broadcast(componentName, eventName, params) {
     this.$children.forEach(child => {
         const name = child.$options.name;
@@ -12,6 +22,7 @@ function broadcast(componentName, eventName, params) {
 }
 export default {
     methods: {
+        // 插槽
         dispatch(componentName, eventName, params) {
             let parent = this.$parent || this.$root;
             let name = parent.$options.name;
@@ -28,6 +39,7 @@ export default {
             }
         },
         broadcast(componentName, eventName, params) {
+            // 绑定this
             broadcast.call(this, componentName, eventName, params);
         }
     }
