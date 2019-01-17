@@ -86,6 +86,7 @@ export default {
             this.getCurrentScrollAtTitleId(scrollTop);
         },
         handleHashChange () {
+            // 
             const url = window.location.href;
             const sharpLinkMatch = sharpMatcherRegx.exec(url);
             if (!sharpLinkMatch) return;
@@ -176,6 +177,7 @@ export default {
         }
     },
     watch: {
+        // 观察根路由  如果根路由如果有变化
         '$route' () {
             this.handleHashChange();
             // this.$nextTick(() => {})
